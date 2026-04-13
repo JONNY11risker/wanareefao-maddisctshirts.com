@@ -1,7 +1,7 @@
 // ==================== Form Submission Handlers ====================
 
 // T-Shirt Order Form
-document.getElementById('tshirtForm').addEventListener('submit', function(e) {
+document.getElementById('tshirtForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     // Clear previous messages
@@ -9,25 +9,48 @@ document.getElementById('tshirtForm').addEventListener('submit', function(e) {
     
     // Validate form
     if (validateTshirtForm()) {
-        // Get form data
-        const formData = {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            size: document.getElementById('size').value,
-            quantity: document.getElementById('quantity').value,
-            color: document.querySelector('input[name="color"]:checked').value,
-            specialRequest: document.getElementById('specialRequest').value
-        };
+        const messageElement = document.getElementById('tshirtMessage');
+        messageElement.textContent = 'Sending your order...';
+        messageElement.classList.add('show', 'success');
+        messageElement.style.display = 'block';
         
-        // Process order
-        processOrder(formData);
+        try {
+            const formData = new FormData(this);
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                messageElement.innerHTML = `
+                    <strong>Order Sent Successfully!</strong><br>
+                    Thank you for your order! We'll contact you soon.
+                `;
+                this.reset();
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            messageElement.innerHTML = `
+                <strong>Error Sending Order</strong><br>
+                Please try again or contact us directly.
+            `;
+            messageElement.classList.remove('success');
+            messageElement.classList.add('error');
+        }
+        
+        setTimeout(() => {
+            messageElement.classList.remove('show');
+            messageElement.style.display = 'none';
+        }, 5000);
     }
 });
 
 // Contact Admin Form
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     // Clear previous messages
@@ -35,17 +58,145 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     
     // Validate form
     if (validateContactForm()) {
-        // Get form data
-        const formData = {
-            name: document.getElementById('contactName').value,
-            email: document.getElementById('contactEmail').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
-        };
+        const messageElement = document.getElementById('contactMessage');
+        messageElement.textContent = 'Sending your message...';
+        messageElement.classList.add('show', 'success');
+        messageElement.style.display = 'block';
         
-        // Process contact
-        processContact(formData);
+        try {
+            const formData = new FormData(this);
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                messageElement.innerHTML = `
+                    <strong>Message Sent Successfully!</strong><br>
+                    Thank you for contacting us! We'll get back to you soon.
+                `;
+                this.reset();
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            messageElement.innerHTML = `
+                <strong>Error Sending Message</strong><br>
+                Please try again or contact us directly.
+            `;
+            messageElement.classList.remove('success');
+            messageElement.classList.add('error');
+        }
+        
+        setTimeout(() => {
+            messageElement.classList.remove('show');
+            messageElement.style.display = 'none';
+        }, 5000);
     }
+});
+
+// ==================== M-Pesa Payment Handler ====================
+
+document.getElementById('payButton').addEventListener('click', function() {
+    // Check if order form is filled (basic validation)
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const size = document.getElementById('size').value;
+    const quantity = document.getElementById('quantity').value;
+    
+    if (!firstName || !lastName || !email || !phone || !size || !quantity) {
+        alert('Please fill in your order details first before making payment.');
+        document.getElementById('firstName').focus();
+        return;
+    }
+    
+    // Show M-Pesa modal
+    document.getElementById('mpesaModal').style.display = 'block';
+    document.getElementById('mpesaPin').focus();
+});
+
+// Modal close handlers
+document.getElementById('cancelPayment').addEventListener('click', function() {
+    document.getElementById('mpesaModal').style.display = 'none';
+    document.getElementById('mpesaPin').value = '';
+});
+
+// Close modal when clicking outside
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('mpesaModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+        document.getElementById('mpesaPin').value = '';
+    }
+});
+
+// Payment confirmation
+document.getElementById('confirmPayment').addEventListener('click', function() {
+    const pin = document.getElementById('mpesaPin').value;
+    
+    if (pin.length !== 4) {
+        alert('Please enter a valid 4-digit M-Pesa PIN.');
+        return;
+    }
+    
+    // Simulate payment processing
+    this.textContent = 'Processing...';
+    this.disabled = true;
+    
+    setTimeout(() => {
+        // Simulate successful payment
+        alert('Payment successful! Your order has been confirmed. You will receive a confirmation email shortly.');
+        
+        // Close modal and reset
+        document.getElementById('mpesaModal').style.display = 'none';
+        document.getElementById('mpesaPin').value = '';
+        this.textContent = 'Confirm Payment';
+        this.disabled = false;
+        
+        // Optionally submit the order form automatically
+        // document.getElementById('tshirtForm').dispatchEvent(new Event('submit'));
+        
+    }, 2000); // 2 second delay to simulate processing
+});
+
+// ==================== Dynamic Phone Numbers ====================
+
+let phoneCounter = 3; // Start from 3 since we have primary and secondary
+
+document.getElementById('addPhoneButton').addEventListener('click', function() {
+    const additionalPhones = document.getElementById('additionalPhones');
+    
+    // Create new phone input row
+    const phoneRow = document.createElement('div');
+    phoneRow.className = 'form-row';
+    phoneRow.id = `phoneRow${phoneCounter}`;
+    
+    const roleLabel = phoneCounter === 3 ? 'Developer Mobile' : `Other Mobile ${phoneCounter - 3}`;
+    
+    phoneRow.innerHTML = `
+        <div class="form-group full-width">
+            <label for="mobile${phoneCounter}">${roleLabel}</label>
+            <div class="mobile-input-group" style="display: flex; flex-direction: row; gap: 1rem;">
+                <input type="tel" id="mobile${phoneCounter}" name="mobile${phoneCounter}" placeholder="Enter mobile number" style="flex: 1;">
+                <button type="button" class="btn btn-danger remove-phone" data-row="${phoneCounter}" style="margin: 0; padding: 0.75rem 1rem; white-space: nowrap;">Remove</button>
+            </div>
+            <span class="error-message" id="mobile${phoneCounter}Error"></span>
+        </div>
+    `;
+    
+    additionalPhones.appendChild(phoneRow);
+    phoneCounter++;
+    
+    // Add event listener for the remove button
+    phoneRow.querySelector('.remove-phone').addEventListener('click', function() {
+        const rowId = this.getAttribute('data-row');
+        document.getElementById(`phoneRow${rowId}`).remove();
+    });
 });
 
 // ==================== Validation Functions ====================
@@ -121,6 +272,31 @@ function validateTshirtForm() {
     } else {
         clearError('quantity');
     }
+
+    const logoFile = document.getElementById('logoUpload').files[0];
+    if (!logoFile) {
+        showError('logoUpload', 'Please upload a logo image');
+        isValid = false;
+    } else {
+        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/jfif'];
+        if (!allowedTypes.includes(logoFile.type)) {
+            showError('logoUpload', 'Please upload a valid image file (PNG, JPG, JPEG, JFIF)');
+            isValid = false;
+        } else {
+            clearError('logoUpload');
+        }
+    }
+
+    const logo = document.querySelector('input[name="logo"]:checked');
+    if (!logo) {
+        showError('logo', 'Please select a logo option');
+        isValid = false;
+    } else {
+        clearError('logo');
+    }
+
+
+
     
     return isValid;
 }
@@ -150,6 +326,24 @@ function validateContactForm() {
         isValid = false;
     } else {
         clearError('contactEmail');
+    }
+
+    // Validate Primary Mobile (optional)
+    const primaryMobile = document.getElementById('primaryMobile').value.trim();
+    if (primaryMobile && !isValidPhone(primaryMobile)) {
+        showError('primaryMobile', 'Please enter a valid phone number');
+        isValid = false;
+    } else {
+        clearError('primaryMobile');
+    }
+
+    // Validate Secondary Mobile (optional)
+    const secondaryMobile = document.getElementById('secondaryMobile').value.trim();
+    if (secondaryMobile && !isValidPhone(secondaryMobile)) {
+        showError('secondaryMobile', 'Please enter a valid phone number');
+        isValid = false;
+    } else {
+        clearError('secondaryMobile');
     }
     
     // Validate Subject
@@ -193,7 +387,7 @@ function isValidPhone(phone) {
 
 function showError(fieldName, message) {
     const errorElement = document.getElementById(fieldName + 'Error');
-    const inputElement = document.getElementById(fieldName);
+    const inputElement = document.getElementById(fieldName) || document.querySelector(`input[name="${fieldName}"]`);
     
     if (errorElement) {
         errorElement.textContent = message;
@@ -207,7 +401,7 @@ function showError(fieldName, message) {
 
 function clearError(fieldName) {
     const errorElement = document.getElementById(fieldName + 'Error');
-    const inputElement = document.getElementById(fieldName);
+    const inputElement = document.getElementById(fieldName) || document.querySelector(`input[name="${fieldName}"]`);
     
     if (errorElement) {
         errorElement.textContent = '';
@@ -220,75 +414,6 @@ function clearError(fieldName) {
 }
 
 // ==================== Form Processing Functions ====================
-
-function processOrder(data) {
-    // Simulate sending data to server
-    console.log('T-Shirt Order Submitted:', data);
-    
-    // In a real application, you would send this data to a backend server
-    // For now, we'll just show a success message
-    
-    // Simulate API call
-    const messageElement = document.getElementById('tshirtMessage');
-    messageElement.textContent = 'Processing your order...';
-    messageElement.classList.add('show', 'success');
-    messageElement.style.display = 'block';
-    
-    // Simulate delay and success response
-    setTimeout(() => {
-        messageElement.innerHTML = `
-            <strong>Order Received!</strong><br>
-            Thank you for your order, ${data.firstName}! 
-            We've sent a confirmation email to ${data.email}.<br>
-            Your order will be ready soon!
-        `;
-        messageElement.classList.remove('error');
-        messageElement.classList.add('success');
-        
-        // Reset form
-        document.getElementById('tshirtForm').reset();
-        
-        // Hide message after 5 seconds
-        setTimeout(() => {
-            messageElement.classList.remove('show');
-            messageElement.style.display = 'none';
-        }, 5000);
-    }, 1500);
-}
-
-function processContact(data) {
-    // Simulate sending message to admin
-    console.log('Contact Message Submitted:', data);
-    
-    // In a real application, you would send this data to a backend server
-    // For now, we'll just show a success message
-    
-    // Simulate API call
-    const messageElement = document.getElementById('contactMessage');
-    messageElement.textContent = 'Sending your message...';
-    messageElement.classList.add('show', 'success');
-    messageElement.style.display = 'block';
-    
-    // Simulate delay and success response
-    setTimeout(() => {
-        messageElement.innerHTML = `
-            <strong>Message Sent Successfully!</strong><br>
-            Thank you for reaching out, ${data.name}! 
-            Admin will review your message and get back to you at ${data.email} shortly.
-        `;
-        messageElement.classList.remove('error');
-        messageElement.classList.add('success');
-        
-        // Reset form
-        document.getElementById('contactForm').reset();
-        
-        // Hide message after 5 seconds
-        setTimeout(() => {
-            messageElement.classList.remove('show');
-            messageElement.style.display = 'none';
-        }, 5000);
-    }, 1500);
-}
 
 function clearMessages(formType) {
     const messageElement = formType === 'tshirt' 
@@ -350,6 +475,18 @@ document.getElementById('contactName')?.addEventListener('blur', function() {
 document.getElementById('contactEmail')?.addEventListener('blur', function() {
     if (this.value.trim() && isValidEmail(this.value.trim())) {
         clearError('contactEmail');
+    }
+});
+
+document.getElementById('primaryMobile')?.addEventListener('blur', function() {
+    if (!this.value.trim() || isValidPhone(this.value.trim())) {
+        clearError('primaryMobile');
+    }
+});
+
+document.getElementById('secondaryMobile')?.addEventListener('blur', function() {
+    if (!this.value.trim() || isValidPhone(this.value.trim())) {
+        clearError('secondaryMobile');
     }
 });
 
