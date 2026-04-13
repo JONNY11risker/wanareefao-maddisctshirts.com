@@ -64,18 +64,16 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         const formData = {
             name: document.getElementById('contactName').value.trim(),
             email: document.getElementById('contactEmail').value.trim(),
-            primaryMobile: document.getElementById('primaryMobile').value.trim(),
-            secondaryMobile: document.getElementById('secondaryMobile').value.trim(),
-            subject: document.getElementById('subject')?.value.trim() || 'Message from MAD DISCIPLES Website',
+            subject: document.getElementById('subject').value.trim(),
             message: document.getElementById('message').value.trim()
         };
 
         openMailto('jontychampee11@gmail.com', `${formData.subject} - ${formData.name}`, `Contact Message:
 Name: ${formData.name}
 Email: ${formData.email}
-Primary Mobile: ${formData.primaryMobile || 'Not provided'}
-Secondary Mobile: ${formData.secondaryMobile || 'Not provided'}
-Message: ${formData.message}`);
+Message: ${formData.message}
+
+Contact us directly: 0725820929 or 0711729501`);
 
         setTimeout(() => {
             messageElement.innerHTML = `
@@ -298,23 +296,8 @@ function validateContactForm() {
         clearError('contactEmail');
     }
 
-    // Validate Primary Mobile (optional)
-    const primaryMobile = document.getElementById('primaryMobile').value.trim();
-    if (primaryMobile && !isValidPhone(primaryMobile)) {
-        showError('primaryMobile', 'Please enter a valid phone number');
-        isValid = false;
-    } else {
-        clearError('primaryMobile');
-    }
-
-    // Validate Secondary Mobile (optional)
-    const secondaryMobile = document.getElementById('secondaryMobile').value.trim();
-    if (secondaryMobile && !isValidPhone(secondaryMobile)) {
-        showError('secondaryMobile', 'Please enter a valid phone number');
-        isValid = false;
-    } else {
-        clearError('secondaryMobile');
-    }
+    // Validate Primary Mobile (optional) - removed since now a link
+    // Validate Secondary Mobile (optional) - removed since now a link
     
     // Validate Subject
     const subject = document.getElementById('subject').value.trim();
@@ -463,17 +446,7 @@ document.getElementById('secondaryMobile')?.addEventListener('blur', function() 
 document.getElementById('subject')?.addEventListener('blur', function() {
     if (this.value.trim() && this.value.trim().length >= 5) {
         clearError('subject');
-    }
-});
-
-document.getElementById('message')?.addEventListener('blur', function() {
-    if (this.value.trim() && this.value.trim().length >= 10) {
-        clearError('message');
-    }
-});
-
-// ==================== Smooth Scroll Enhancement ====================
-
+// Real-time validation for Contact form - removed for primaryMobile and secondaryMobile since now links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
