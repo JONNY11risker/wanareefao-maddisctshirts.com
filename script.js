@@ -120,32 +120,6 @@ document.getElementById('payButton').addEventListener('click', function() {
     }
 });
 
-// Payment phone number management
-let paymentPhoneCounter = 1;
-
-document.getElementById('addPaymentPhone').addEventListener('click', function() {
-    const paymentPhones = document.querySelector('.payment-phones');
-    
-    const phoneItem = document.createElement('div');
-    phoneItem.className = 'payment-phone-item';
-    phoneItem.id = `paymentPhoneItem${paymentPhoneCounter}`;
-    
-    phoneItem.innerHTML = `
-        <input type="tel" class="payment-phone-input" placeholder="Enter phone number" pattern="[0-9+]{10,15}">
-        <button type="button" class="remove-payment-phone" data-id="${paymentPhoneCounter}">Remove</button>
-    `;
-    
-    paymentPhones.appendChild(phoneItem);
-    
-    // Add remove button listener
-    phoneItem.querySelector('.remove-payment-phone').addEventListener('click', function() {
-        const itemId = this.getAttribute('data-id');
-        document.getElementById(`paymentPhoneItem${itemId}`).remove();
-    });
-    
-    paymentPhoneCounter++;
-});
-
 // Modal close handlers
 document.getElementById('cancelPayment').addEventListener('click', function() {
     document.getElementById('mpesaModal').style.display = 'none';
@@ -169,32 +143,26 @@ window.addEventListener('click', function(event) {
 
 // Payment confirmation
 document.getElementById('confirmPayment').addEventListener('click', function() {
-    const paymentPhones = document.querySelectorAll('.payment-phone-input');
-    const selectedNumbers = Array.from(paymentPhones)
-        .map(input => input.value.trim())
-        .filter(val => val !== '');
-    
-    if (selectedNumbers.length === 0) {
-        alert('Please enter at least one phone number to proceed with payment.');
+    const paymentPhoneInput = document.getElementById('paymentPhone');
+    const phoneNumber = paymentPhoneInput.value.trim();
+    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    const amount = 500;
+
+    if (!phoneNumber) {
+        alert('Please enter the phone number you want to pay from.');
+        paymentPhoneInput.focus();
         return;
     }
-    
-    // Validate phone numbers
+
     const phoneRegex = /^(\+254|0)[1-9][0-9]{8}$/;
-    for (let number of selectedNumbers) {
-        if (!phoneRegex.test(number)) {
-            alert('Please enter valid phone numbers (e.g., 0725820929 or +254725820929).');
-            return;
-        }
+    if (!phoneRegex.test(phoneNumber)) {
+        alert('Please enter a valid phone number like 0725820929 or +254725820929.');
+        paymentPhoneInput.focus();
+        return;
     }
-    
-    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-    const primaryNumber = selectedNumbers[0];
-    const amount = 500;
-    
-    // Use encoded USSD so phone prompts correctly
+
     let ussdCode = '';
-    switch(selectedMethod) {
+    switch (selectedMethod) {
         case 'mpesa':
             ussdCode = '*384*348%23';
             break;
@@ -205,22 +173,14 @@ document.getElementById('confirmPayment').addEventListener('click', function() {
             ussdCode = '*679%23';
             break;
     }
-    
+
     const ussdLink = `tel:${ussdCode}`;
     window.location.href = ussdLink;
-    
-    // Show confirmation message
-    alert(`Payment Instructions:\n\nMethod: ${selectedMethod.toUpperCase()}\nPhone: ${primaryNumber}\nAmount: KSH ${amount}\n\nYour phone should now open the payment prompt. Follow the prompts to enter your PIN and complete the payment.`);
-    
-    // Close modal
+
+    alert(`Payment Instructions:\n\nMethod: ${selectedMethod.toUpperCase()}\nPhone: ${phoneNumber}\nAmount: KSH ${amount}\n\nYour phone should now open the payment prompt. If it does not, please make sure you are using a mobile browser and tap the notification or dialer that appears.`);
+
     document.getElementById('mpesaModal').style.display = 'none';
-    
-    // Reset phone inputs
-    document.querySelectorAll('.payment-phone-input').forEach((input, index) => {
-        if (index === 0) {
-            input.value = '';
-        }
-    });
+    paymentPhoneInput.value = '';
 });
 
 // ==================== Validation Functions ====================
@@ -295,20 +255,6 @@ function validateTshirtForm() {
         isValid = false;
     } else {
         clearError('quantity');
-    }
-
-    const logoFile = document.getElementById('logoUpload').files[0];
-    if (!logoFile) {
-        showError('logoUpload', 'Please upload a logo image');
-        isValid = false;
-    } else {
-        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/jfif'];
-        if (!allowedTypes.includes(logoFile.type)) {
-            showError('logoUpload', 'Please upload a valid image file (PNG, JPG, JPEG, JFIF)');
-            isValid = false;
-        } else {
-            clearError('logoUpload');
-        }
     }
 
     const logo = document.querySelector('input[name="logo"]:checked');
