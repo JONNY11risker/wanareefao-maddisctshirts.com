@@ -233,6 +233,31 @@ textarea {
     margin-top: 0.25rem;
 }
 
+/* ==================== Mobile Links ==================== */
+.mobile-link-display {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.mobile-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mobile-link:hover {
+    text-decoration: underline;
+    color: #cc0000;
+}
+
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
