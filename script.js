@@ -1,7 +1,7 @@
 // ==================== Form Submission Handlers ====================
 
 // T-Shirt Order Form
-document.getElementById('tshirtForm').addEventListener('submit', async function(e) {
+document.getElementById('tshirtForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     // Clear previous messages
@@ -10,47 +10,45 @@ document.getElementById('tshirtForm').addEventListener('submit', async function(
     // Validate form
     if (validateTshirtForm()) {
         const messageElement = document.getElementById('tshirtMessage');
-        messageElement.textContent = 'Sending your order...';
+        messageElement.textContent = 'Opening your email app...';
         messageElement.classList.add('show', 'success');
         messageElement.style.display = 'block';
         
-        try {
-            const formData = new FormData(this);
-            const response = await fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
-            
-            if (response.ok) {
-                messageElement.innerHTML = `
-                    <strong>Order Sent Successfully!</strong><br>
-                    Thank you for your order! We'll contact you soon.
-                `;
-                this.reset();
-            } else {
-                throw new Error('Form submission failed');
-            }
-        } catch (error) {
-            messageElement.innerHTML = `
-                <strong>Error Sending Order</strong><br>
-                Please try again or contact us directly.
-            `;
-            messageElement.classList.remove('success');
-            messageElement.classList.add('error');
-        }
-        
+        const formData = {
+            firstName: document.getElementById('firstName').value.trim(),
+            lastName: document.getElementById('lastName').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            size: document.getElementById('size').value,
+            quantity: document.getElementById('quantity').value,
+            color: document.querySelector('input[name="color"]:checked').value,
+            logo: document.querySelector('input[name="logo"]:checked').value,
+            specialRequest: document.getElementById('specialRequest').value.trim()
+        };
+
+        openMailto('jontychampee11@gmail.com', `MAD DISCIPLES Order from ${formData.firstName} ${formData.lastName}`, `Order Details:
+Name: ${formData.firstName} ${formData.lastName}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Size: ${formData.size}
+Quantity: ${formData.quantity}
+Color: ${formData.color}
+Logo: ${formData.logo}
+Special Requests: ${formData.specialRequest || 'None'}`);
+
         setTimeout(() => {
-            messageElement.classList.remove('show');
-            messageElement.style.display = 'none';
-        }, 5000);
+            messageElement.innerHTML = `
+                <strong>Email composer opened.</strong><br>
+                Please send the email in your mail app to complete the order.
+            `;
+            messageElement.classList.remove('error');
+            messageElement.classList.add('success');
+        }, 500);
     }
 });
 
 // Contact Admin Form
-document.getElementById('contactForm').addEventListener('submit', async function(e) {
+document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     // Clear previous messages
@@ -59,44 +57,42 @@ document.getElementById('contactForm').addEventListener('submit', async function
     // Validate form
     if (validateContactForm()) {
         const messageElement = document.getElementById('contactMessage');
-        messageElement.textContent = 'Sending your message...';
+        messageElement.textContent = 'Opening your email app...';
         messageElement.classList.add('show', 'success');
         messageElement.style.display = 'block';
         
-        try {
-            const formData = new FormData(this);
-            const response = await fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
-            
-            if (response.ok) {
-                messageElement.innerHTML = `
-                    <strong>Message Sent Successfully!</strong><br>
-                    Thank you for contacting us! We'll get back to you soon.
-                `;
-                this.reset();
-            } else {
-                throw new Error('Form submission failed');
-            }
-        } catch (error) {
-            messageElement.innerHTML = `
-                <strong>Error Sending Message</strong><br>
-                Please try again or contact us directly.
-            `;
-            messageElement.classList.remove('success');
-            messageElement.classList.add('error');
-        }
-        
+        const formData = {
+            name: document.getElementById('contactName').value.trim(),
+            email: document.getElementById('contactEmail').value.trim(),
+            primaryMobile: document.getElementById('primaryMobile').value.trim(),
+            secondaryMobile: document.getElementById('secondaryMobile').value.trim(),
+            subject: document.getElementById('subject')?.value.trim() || 'Message from MAD DISCIPLES Website',
+            message: document.getElementById('message').value.trim()
+        };
+
+        openMailto('jontychampee11@gmail.com', `${formData.subject} - ${formData.name}`, `Contact Message:
+Name: ${formData.name}
+Email: ${formData.email}
+Primary Mobile: ${formData.primaryMobile || 'Not provided'}
+Secondary Mobile: ${formData.secondaryMobile || 'Not provided'}
+Message: ${formData.message}`);
+
         setTimeout(() => {
-            messageElement.classList.remove('show');
-            messageElement.style.display = 'none';
-        }, 5000);
+            messageElement.innerHTML = `
+                <strong>Email composer opened.</strong><br>
+                Please send the email in your mail app to contact the author.
+            `;
+            messageElement.classList.remove('error');
+            messageElement.classList.add('success');
+        }, 500);
     }
 });
+
+function openMailto(recipient, subject, body) {
+    const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+}
+
 
 // ==================== M-Pesa Payment Handler ====================
 
@@ -196,37 +192,25 @@ document.getElementById('confirmPayment').addEventListener('click', function() {
     const primaryNumber = selectedNumbers[0];
     const amount = 500;
     
-    // Format number for USSD codes
-    let formattedNumber = primaryNumber.startsWith('+254') 
-        ? primaryNumber.substring(1) 
-        : primaryNumber;
-    
+    // Use encoded USSD so phone prompts correctly
     let ussdCode = '';
-    
     switch(selectedMethod) {
         case 'mpesa':
-            // M-Pesa USSD code
-            ussdCode = `*384*348#`;
-            // M-Pesa URL scheme (if app is installed)
-            const mpesaUrl = `tel:${ussdCode}`;
-            window.location.href = mpesaUrl;
+            ussdCode = '*384*348%23';
             break;
-            
         case 'airtel':
-            // Airtel Money USSD code
-            ussdCode = `*360#`;
-            const airtelUrl = `tel:${ussdCode}`;
-            window.location.href = airtelUrl;
+            ussdCode = '*360%23';
             break;
-            
         case 'simtoolkit':
-            // SIM Toolkit menu
-            window.location.href = `tel:*679#`;
+            ussdCode = '*679%23';
             break;
     }
     
+    const ussdLink = `tel:${ussdCode}`;
+    window.location.href = ussdLink;
+    
     // Show confirmation message
-    alert(`Payment Instructions:\\n\\nMethod: ${selectedMethod.toUpperCase()}\\nPhone: ${primaryNumber}\\nAmount: KSH ${amount}\\n\\nFollow the prompts to enter your PIN and complete the payment.\\n\\nYour order will be confirmed once payment is successful.`);
+    alert(`Payment Instructions:\n\nMethod: ${selectedMethod.toUpperCase()}\nPhone: ${primaryNumber}\nAmount: KSH ${amount}\n\nYour phone should now open the payment prompt. Follow the prompts to enter your PIN and complete the payment.`);
     
     // Close modal
     document.getElementById('mpesaModal').style.display = 'none';
@@ -236,41 +220,6 @@ document.getElementById('confirmPayment').addEventListener('click', function() {
         if (index === 0) {
             input.value = '';
         }
-    });
-});
-
-// ==================== Dynamic Phone Numbers ====================
-
-let phoneCounter = 3; // Start from 3 since we have primary and secondary
-
-document.getElementById('addPhoneButton').addEventListener('click', function() {
-    const additionalPhones = document.getElementById('additionalPhones');
-    
-    // Create new phone input row
-    const phoneRow = document.createElement('div');
-    phoneRow.className = 'form-row';
-    phoneRow.id = `phoneRow${phoneCounter}`;
-    
-    const roleLabel = phoneCounter === 3 ? 'Developer Mobile' : `Other Mobile ${phoneCounter - 3}`;
-    
-    phoneRow.innerHTML = `
-        <div class="form-group full-width">
-            <label for="mobile${phoneCounter}">${roleLabel}</label>
-            <div class="mobile-input-group" style="display: flex; flex-direction: row; gap: 1rem;">
-                <input type="tel" id="mobile${phoneCounter}" name="mobile${phoneCounter}" placeholder="Enter mobile number" style="flex: 1;">
-                <button type="button" class="btn btn-danger remove-phone" data-row="${phoneCounter}" style="margin: 0; padding: 0.75rem 1rem; white-space: nowrap;">Remove</button>
-            </div>
-            <span class="error-message" id="mobile${phoneCounter}Error"></span>
-        </div>
-    `;
-    
-    additionalPhones.appendChild(phoneRow);
-    phoneCounter++;
-    
-    // Add event listener for the remove button
-    phoneRow.querySelector('.remove-phone').addEventListener('click', function() {
-        const rowId = this.getAttribute('data-row');
-        document.getElementById(`phoneRow${rowId}`).remove();
     });
 });
 
