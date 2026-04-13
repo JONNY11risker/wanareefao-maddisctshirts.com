@@ -111,24 +111,21 @@ document.getElementById('payButton').addEventListener('click', function() {
     
     // Show M-Pesa modal
     document.getElementById('mpesaModal').style.display = 'block';
-    // Focus on the first phone input
-    const firstPhoneInput = document.querySelector('.payment-phone-input');
-    if (firstPhoneInput) {
-        firstPhoneInput.focus();
+    // Focus on the phone input
+    const paymentPhoneInput = document.getElementById('paymentPhone');
+    if (paymentPhoneInput) {
+        paymentPhoneInput.focus();
     }
 });
 
 // Modal close handlers
 document.getElementById('cancelPayment').addEventListener('click', function() {
     document.getElementById('mpesaModal').style.display = 'none';
-    // Reset phone inputs but keep the first one
-    const paymentPhones = document.querySelectorAll('.payment-phone-input');
-    paymentPhones.forEach((input, index) => {
-        if (index === 0) {
-            input.value = '';
-            input.focus();
-        }
-    });
+    // Reset phone input
+    const paymentPhoneInput = document.getElementById('paymentPhone');
+    if (paymentPhoneInput) {
+        paymentPhoneInput.value = '';
+    }
 });
 
 // Close modal when clicking outside
@@ -446,6 +443,9 @@ document.getElementById('secondaryMobile')?.addEventListener('blur', function() 
 document.getElementById('subject')?.addEventListener('blur', function() {
     if (this.value.trim() && this.value.trim().length >= 5) {
         clearError('subject');
+    }
+});
+
 // Real-time validation for Contact form - removed for primaryMobile and secondaryMobile since now links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
