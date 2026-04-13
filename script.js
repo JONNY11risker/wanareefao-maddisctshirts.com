@@ -140,8 +140,8 @@ window.addEventListener('click', function(event) {
 document.getElementById('confirmPayment').addEventListener('click', function() {
     const paymentPhoneInput = document.getElementById('paymentPhone');
     const phoneNumber = paymentPhoneInput.value.trim();
-    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     const amount = 500;
+    const mpesaRecipient = '0703760756';
 
     if (!phoneNumber) {
         alert('Please enter the phone number you want to pay from.');
@@ -156,23 +156,13 @@ document.getElementById('confirmPayment').addEventListener('click', function() {
         return;
     }
 
-    let ussdCode = '';
-    switch (selectedMethod) {
-        case 'mpesa':
-            ussdCode = '*384*348%23';
-            break;
-        case 'airtel':
-            ussdCode = '*360%23';
-            break;
-        case 'simtoolkit':
-            ussdCode = '*679%23';
-            break;
-    }
+    // Direct M-Pesa send prompt to the specified recipient number
+    const mpesaUssdCode = `*150*1*1*${mpesaRecipient}*${amount}%23`;
+    const mpesaLink = `tel:${mpesaUssdCode}`;
 
-    const ussdLink = `tel:${ussdCode}`;
-    window.location.href = ussdLink;
+    window.location.href = mpesaLink;
 
-    alert(`Payment Instructions:\n\nMethod: ${selectedMethod.toUpperCase()}\nPhone: ${phoneNumber}\nAmount: KSH ${amount}\n\nYour phone should now open the payment prompt. If it does not, please make sure you are using a mobile browser and tap the notification or dialer that appears.`);
+    alert(`Payment Instructions:\n\nSend KSH ${amount} to ${mpesaRecipient} using M-Pesa.\n\nYour phone should open the M-Pesa prompt now. If it does not, manually dial ${mpesaUssdCode.replace('%23', '#')}.`);
 
     document.getElementById('mpesaModal').style.display = 'none';
     paymentPhoneInput.value = '';
@@ -428,25 +418,13 @@ document.getElementById('contactEmail')?.addEventListener('blur', function() {
     }
 });
 
-document.getElementById('primaryMobile')?.addEventListener('blur', function() {
-    if (!this.value.trim() || isValidPhone(this.value.trim())) {
-        clearError('primaryMobile');
-    }
-});
-
-document.getElementById('secondaryMobile')?.addEventListener('blur', function() {
-    if (!this.value.trim() || isValidPhone(this.value.trim())) {
-        clearError('secondaryMobile');
-    }
-});
-
 document.getElementById('subject')?.addEventListener('blur', function() {
     if (this.value.trim() && this.value.trim().length >= 5) {
         clearError('subject');
     }
 });
 
-// Real-time validation for Contact form - removed for primaryMobile and secondaryMobile since now links
+// Real-time validation for Contact form mobile fields was removed because these are now link-only items.
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
