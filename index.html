@@ -169,7 +169,7 @@
                     </div>
                     <div class="payment-method">
                         <span class="method-label">Pay through:</span>
-                        <span class="method-value">M-Pesa: +254 0703760756</span>
+                        <span class="method-value">M-Pesa: +254 703760756</span>
                     </div>
                     <button id="payButton" class="btn btn-success">Pay Now with M-Pesa</button>
                 </div>
@@ -198,25 +198,19 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="primaryMobile">Primary Mobile</label>
-                        <div class="mobile-link-display">
-                            <a href="tel:0725820929" class="mobile-link">📞 0725820929</a>
+                        <div class="mobile-input-group">
+                            <input type="tel" id="primaryMobile" name="primaryMobile" placeholder="0725820929">
+                            <span class="error-message" id="primaryMobileError"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="secondaryMobile">Secondary Mobile</label>
-                        <div class="mobile-link-display">
-                            <a href="tel:0711729501" class="mobile-link">📞 0711729501</a>
+                        <div class="mobile-input-group">
+                            <input type="tel" id="secondaryMobile" name="secondaryMobile" placeholder="0711729501">
+                            <span class="error-message" id="secondaryMobileError"></span>
                         </div>
                     </div>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group full-width">
-                        <button type="button" id="addPhoneButton" class="btn btn-secondary">+ Add Developer/Other Mobile Number</button>
-                    </div>
-                </div>
-
-                <div id="additionalPhones"></div>
 
                 <div class="form-group full-width">
                     <label for="message">Message *</label>
@@ -244,38 +238,19 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">M-Pesa Payment</h2>
-                <p>Select payment method to deduct KSH 500</p>
+                <p>Enter your M-Pesa PIN to complete payment of KSH 500</p>
             </div>
             <div class="modal-body">
-                <div class="payment-phone-section">
-                    <label class="pin-label">Phone Number to Deduct From:</label>
-                    <div class="payment-phones">
-                        <div class="payment-phone-item">
-                            <input type="tel" class="payment-phone-input" placeholder="Enter phone number" pattern="[0-9+]{10,15}">
-                        </div>
-                    </div>
-                    <button type="button" id="addPaymentPhone" class="btn-add-phone">+ Add Another Number</button>
+                <div class="pin-input-group">
+                    <label for="mpesaPin" class="pin-label">M-Pesa PIN:</label>
+                    <input type="password" id="mpesaPin" class="pin-input" maxlength="4" placeholder="****">
                 </div>
-                <div class="payment-method-section" style="margin-top: 1rem;">
-                    <label class="pin-label">Payment Method:</label>
-                    <div class="payment-method-options">
-                        <label class="method-radio">
-                            <input type="radio" name="paymentMethod" value="mpesa" checked>
-                            <span>M-Pesa</span>
-                        </label>
-                        <label class="method-radio">
-                            <input type="radio" name="paymentMethod" value="airtel">
-                            <span>Airtel Money</span>
-                        </label>
-                        <label class="method-radio">
-                            <input type="radio" name="paymentMethod" value="simtoolkit">
-                            <span>SIM Toolkit</span>
-                        </label>
-                    </div>
-                </div>
+                <p style="text-align: center; color: #666; font-size: 0.9rem;">
+                    Payment will be processed securely through M-Pesa
+                </p>
             </div>
             <div class="modal-footer">
-                <button id="confirmPayment" class="btn-confirm">Proceed to Payment</button>
+                <button id="confirmPayment" class="btn-confirm">Confirm Payment</button>
                 <button id="cancelPayment" class="btn-cancel">Cancel</button>
             </div>
         </div>
