@@ -33,7 +33,7 @@
             <h2>Order Your T-Shirt</h2>
             <p class="section-subtitle">Choose your style and place your order below</p>
             
-            <form id="tshirtForm" action="https://formspree.io/f/mlgaedvz" method="POST" class="form-container">
+            <form id="tshirtForm" action="#" class="form-container">
                 <div class="form-section">
                     <h3 class="form-section-title">Personal Information</h3>
                     <div class="form-row">
@@ -183,7 +183,7 @@
             <h2>Contact Admin</h2>
             <p class="section-subtitle">Have questions? Get in touch with our administration team</p>
             
-            <form id="contactForm" action="https://formspree.io/f/mlgaedvz" method="POST" class="form-container">
+            <form id="contactForm" action="#" class="form-container">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="contactName">Full Name *</label>
@@ -195,6 +195,7 @@
                         <input type="email" id="contactEmail" name="contactEmail" required>
                         <span class="error-message" id="contactEmailError"></span>
                     </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="primaryMobile">Primary Mobile</label>
@@ -211,7 +212,13 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" placeholder="Enter subject" required>
+                        <span class="error-message" id="subjectError"></span>
+                    </div>
+                </div>
                 <div class="form-group full-width">
                     <label for="message">Message *</label>
                     <textarea id="message" name="message" rows="6" required placeholder="Type your message here..."></textarea>
@@ -237,20 +244,37 @@
     <div id="mpesaModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">M-Pesa Payment</h2>
-                <p>Enter your M-Pesa PIN to complete payment of KSH 500</p>
+                <h2 class="modal-title">M-Pesa / Airtel Payment</h2>
+                <p>Select your phone and payment mode to open the prompt.</p>
             </div>
             <div class="modal-body">
-                <div class="pin-input-group">
-                    <label for="mpesaPin" class="pin-label">M-Pesa PIN:</label>
-                    <input type="password" id="mpesaPin" class="pin-input" maxlength="4" placeholder="****">
+                <div class="payment-phone-section">
+                    <label for="paymentPhone" class="pin-label">Phone Number to Pay From</label>
+                    <input type="tel" id="paymentPhone" class="payment-phone-input" placeholder="0725820929" required>
                 </div>
-                <p style="text-align: center; color: #666; font-size: 0.9rem;">
-                    Payment will be processed securely through M-Pesa
+                <div class="payment-method-section">
+                    <label class="pin-label">Payment Method</label>
+                    <div class="payment-method-options">
+                        <label class="method-radio">
+                            <input type="radio" name="paymentMethod" value="mpesa" checked>
+                            <span>M-Pesa</span>
+                        </label>
+                        <label class="method-radio">
+                            <input type="radio" name="paymentMethod" value="airtel">
+                            <span>Airtel Money</span>
+                        </label>
+                        <label class="method-radio">
+                            <input type="radio" name="paymentMethod" value="simtoolkit">
+                            <span>SIM Toolkit</span>
+                        </label>
+                    </div>
+                </div>
+                <p style="text-align: center; color: #666; font-size: 0.95rem; margin-top: 1rem;">
+                    Click "Proceed to Payment" and your phone should open the mobile payment prompt.
                 </p>
             </div>
             <div class="modal-footer">
-                <button id="confirmPayment" class="btn-confirm">Confirm Payment</button>
+                <button id="confirmPayment" class="btn-confirm">Proceed to Payment</button>
                 <button id="cancelPayment" class="btn-cancel">Cancel</button>
             </div>
         </div>
