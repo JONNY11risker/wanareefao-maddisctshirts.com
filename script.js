@@ -117,13 +117,50 @@ document.getElementById('payButton').addEventListener('click', function() {
     
     // Show M-Pesa modal
     document.getElementById('mpesaModal').style.display = 'block';
-    document.getElementById('mpesaPin').focus();
+    // Focus on the first phone input
+    const firstPhoneInput = document.querySelector('.payment-phone-input');
+    if (firstPhoneInput) {
+        firstPhoneInput.focus();
+    }
+});
+
+// Payment phone number management
+let paymentPhoneCounter = 1;
+
+document.getElementById('addPaymentPhone').addEventListener('click', function() {
+    const paymentPhones = document.querySelector('.payment-phones');
+    
+    const phoneItem = document.createElement('div');
+    phoneItem.className = 'payment-phone-item';
+    phoneItem.id = `paymentPhoneItem${paymentPhoneCounter}`;
+    
+    phoneItem.innerHTML = `
+        <input type="tel" class="payment-phone-input" placeholder="Enter phone number" pattern="[0-9+]{10,15}">
+        <button type="button" class="remove-payment-phone" data-id="${paymentPhoneCounter}">Remove</button>
+    `;
+    
+    paymentPhones.appendChild(phoneItem);
+    
+    // Add remove button listener
+    phoneItem.querySelector('.remove-payment-phone').addEventListener('click', function() {
+        const itemId = this.getAttribute('data-id');
+        document.getElementById(`paymentPhoneItem${itemId}`).remove();
+    });
+    
+    paymentPhoneCounter++;
 });
 
 // Modal close handlers
 document.getElementById('cancelPayment').addEventListener('click', function() {
     document.getElementById('mpesaModal').style.display = 'none';
-    document.getElementById('mpesaPin').value = '';
+    // Reset phone inputs but keep the first one
+    const paymentPhones = document.querySelectorAll('.payment-phone-input');
+    paymentPhones.forEach((input, index) => {
+        if (index === 0) {
+            input.value = '';
+            input.focus();
+        }
+    });
 });
 
 // Close modal when clicking outside
@@ -131,37 +168,75 @@ window.addEventListener('click', function(event) {
     const modal = document.getElementById('mpesaModal');
     if (event.target === modal) {
         modal.style.display = 'none';
-        document.getElementById('mpesaPin').value = '';
     }
 });
 
 // Payment confirmation
 document.getElementById('confirmPayment').addEventListener('click', function() {
-    const pin = document.getElementById('mpesaPin').value;
+    const paymentPhones = document.querySelectorAll('.payment-phone-input');
+    const selectedNumbers = Array.from(paymentPhones)
+        .map(input => input.value.trim())
+        .filter(val => val !== '');
     
-    if (pin.length !== 4) {
-        alert('Please enter a valid 4-digit M-Pesa PIN.');
+    if (selectedNumbers.length === 0) {
+        alert('Please enter at least one phone number to proceed with payment.');
         return;
     }
     
-    // Simulate payment processing
-    this.textContent = 'Processing...';
-    this.disabled = true;
+    // Validate phone numbers
+    const phoneRegex = /^(\+254|0)[1-9][0-9]{8}$/;
+    for (let number of selectedNumbers) {
+        if (!phoneRegex.test(number)) {
+            alert('Please enter valid phone numbers (e.g., 0725820929 or +254725820929).');
+            return;
+        }
+    }
     
-    setTimeout(() => {
-        // Simulate successful payment
-        alert('Payment successful! Your order has been confirmed. You will receive a confirmation email shortly.');
-        
-        // Close modal and reset
-        document.getElementById('mpesaModal').style.display = 'none';
-        document.getElementById('mpesaPin').value = '';
-        this.textContent = 'Confirm Payment';
-        this.disabled = false;
-        
-        // Optionally submit the order form automatically
-        // document.getElementById('tshirtForm').dispatchEvent(new Event('submit'));
-        
-    }, 2000); // 2 second delay to simulate processing
+    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    const primaryNumber = selectedNumbers[0];
+    const amount = 500;
+    
+    // Format number for USSD codes
+    let formattedNumber = primaryNumber.startsWith('+254') 
+        ? primaryNumber.substring(1) 
+        : primaryNumber;
+    
+    let ussdCode = '';
+    
+    switch(selectedMethod) {
+        case 'mpesa':
+            // M-Pesa USSD code
+            ussdCode = `*384*348#`;
+            // M-Pesa URL scheme (if app is installed)
+            const mpesaUrl = `tel:${ussdCode}`;
+            window.location.href = mpesaUrl;
+            break;
+            
+        case 'airtel':
+            // Airtel Money USSD code
+            ussdCode = `*360#`;
+            const airtelUrl = `tel:${ussdCode}`;
+            window.location.href = airtelUrl;
+            break;
+            
+        case 'simtoolkit':
+            // SIM Toolkit menu
+            window.location.href = `tel:*679#`;
+            break;
+    }
+    
+    // Show confirmation message
+    alert(`Payment Instructions:\\n\\nMethod: ${selectedMethod.toUpperCase()}\\nPhone: ${primaryNumber}\\nAmount: KSH ${amount}\\n\\nFollow the prompts to enter your PIN and complete the payment.\\n\\nYour order will be confirmed once payment is successful.`);
+    
+    // Close modal
+    document.getElementById('mpesaModal').style.display = 'none';
+    
+    // Reset phone inputs
+    document.querySelectorAll('.payment-phone-input').forEach((input, index) => {
+        if (index === 0) {
+            input.value = '';
+        }
+    });
 });
 
 // ==================== Dynamic Phone Numbers ====================
