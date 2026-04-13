@@ -233,6 +233,31 @@ textarea {
     margin-top: 0.25rem;
 }
 
+/* ==================== Mobile Links ==================== */
+.mobile-link-display {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.mobile-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mobile-link:hover {
+    text-decoration: underline;
+    color: #cc0000;
+}
+
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
@@ -633,6 +658,111 @@ input[type="file"]:focus {
 
 .btn-cancel:hover {
     background-color: #545b62;
+}
+
+/* ==================== Payment Phone Section ==================== */
+.payment-phone-section {
+    margin-bottom: 1.5rem;
+}
+
+.payment-phones {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.payment-phone-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.payment-phone-input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid #dee2e6;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.payment-phone-input:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+.btn-add-phone {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add-phone:hover {
+    background-color: #0056b3;
+}
+
+.remove-payment-phone {
+    background-color: #dc3545;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.remove-payment-phone:hover {
+    background-color: #c82333;
+}
+
+/* ==================== Payment Method Section ==================== */
+.payment-method-section {
+    margin-bottom: 1rem;
+}
+
+.payment-method-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.method-radio {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 2px solid #dee2e6;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: #f8f9fa;
+}
+
+.method-radio:hover {
+    background-color: #e9ecef;
+    border-color: #28a745;
+}
+
+.method-radio input[type="radio"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    accent-color: #28a745;
+}
+
+.method-radio span {
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
 /* ==================== Messages ==================== */
