@@ -33,7 +33,7 @@
             <h2>Order Your T-Shirt</h2>
             <p class="section-subtitle">Choose your style and place your order below</p>
             
-            <form id="tshirtForm" class="form-container">
+            <form id="tshirtForm" action="https://formspree.io/f/mlgaedvz" method="POST" class="form-container">
                 <div class="form-section">
                     <h3 class="form-section-title">Personal Information</h3>
                     <div class="form-row">
@@ -123,6 +123,12 @@
                     <div class="form-row">
                         <div class="form-group full-width">
                             <label>Logo Choice</label>
+                            <div class="logo-options">
+                                <label class="logo-label">
+                                    <input type="radio" name="logo" value="No Logo" checked>
+                                    <div class="logo-preview no-logo">No Logo</div>
+                                    No Logo
+                                </label>
                                 <label class="logo-label">
                                     <input type="radio" name="logo" value="Logo 1">
                                     <img src="c:\Users\MBURU MWANGI\Pictures\mdisc log 1.jfif" alt="Logo 1" class="logo-preview">
@@ -149,10 +155,25 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Place Order</button>
-                <small class="form-hint">Your order details will be emailed to <strong>jontychampee11@gmail.com</strong></small>
                 <span class="form-message" id="tshirtMessage"></span>
 
             </form>
+
+            <!-- Payment Section -->
+            <div class="payment-section">
+                <h3 class="payment-title">Complete Your Payment</h3>
+                <div class="payment-details">
+                    <div class="payment-amount">
+                        <span class="amount-label">Amount:</span>
+                        <span class="amount-value">KSH 500</span>
+                    </div>
+                    <div class="payment-method">
+                        <span class="method-label">Pay through:</span>
+                        <span class="method-value">M-Pesa: +254 703760756</span>
+                    </div>
+                    <button id="payButton" class="btn btn-success">Pay Now with M-Pesa</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -162,7 +183,7 @@
             <h2>Contact Admin</h2>
             <p class="section-subtitle">Have questions? Get in touch with our administration team</p>
             
-            <form id="contactForm" class="form-container">
+            <form id="contactForm" action="https://formspree.io/f/mlgaedvz" method="POST" class="form-container">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="contactName">Full Name *</label>
@@ -174,15 +195,30 @@
                         <input type="email" id="contactEmail" name="contactEmail" required>
                         <span class="error-message" id="contactEmailError"></span>
                     </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="primaryMobile">Primary Mobile</label>
+                        <div class="mobile-input-group">
+                            <input type="tel" id="primaryMobile" name="primaryMobile" placeholder="0725820929">
+                            <span class="error-message" id="primaryMobileError"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="secondaryMobile">Secondary Mobile</label>
+                        <div class="mobile-input-group">
+                            <input type="tel" id="secondaryMobile" name="secondaryMobile" placeholder="0711729501">
+                            <span class="error-message" id="secondaryMobileError"></span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group full-width">
-                        <label for="subject">Subject *</label>
-                        <input type="text" id="subject" name="subject" required>
-                        <span class="error-message" id="subjectError"></span>
+                        <button type="button" id="addPhoneButton" class="btn btn-secondary">+ Add Developer/Other Mobile Number</button>
                     </div>
                 </div>
+
+                <div id="additionalPhones">0797479447</div>
 
                 <div class="form-group full-width">
                     <label for="message">Message *</label>
@@ -191,7 +227,6 @@
                 </div>
 
                 <button type="submit" class="btn btn-secondary">Send Message</button>
-                <small class="form-hint">Your message will be emailed to <strong>jontychampee11@gmail.com</strong></small>
                 <span class="form-message" id="contactMessage"></span>
 
             </form>
@@ -205,6 +240,29 @@
             <p>Built with passion for our community.</p>
         </div>
     </footer>
+
+    <!-- M-Pesa Payment Modal -->
+    <div id="mpesaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">M-Pesa Payment</h2>
+                <p>Enter your M-Pesa PIN to complete payment of KSH 500</p>
+            </div>
+            <div class="modal-body">
+                <div class="pin-input-group">
+                    <label for="mpesaPin" class="pin-label">M-Pesa PIN:</label>
+                    <input type="password" id="mpesaPin" class="pin-input" maxlength="4" placeholder="****">
+                </div>
+                <p style="text-align: center; color: #666; font-size: 0.9rem;">
+                    Payment will be processed securely through M-Pesa
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmPayment" class="btn-confirm">Confirm Payment</button>
+                <button id="cancelPayment" class="btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
