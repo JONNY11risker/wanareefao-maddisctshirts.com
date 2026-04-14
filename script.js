@@ -142,12 +142,6 @@ document.getElementById('confirmPayment').addEventListener('click', function() {
     const phoneNumber = paymentPhoneInput.value.trim();
     const amount = 500;
     const mpesaRecipient = '0703760756';
-
-    if (!phoneNumber) {
-        alert('Please enter the phone number you want to pay from.');
-        paymentPhoneInput.focus();
-        return;
-    }
 });    
     const phoneRegex = /^(\+254|0)[1-9][0-9]{8}$/;
     if (!phoneRegex.test(phoneNumber)) {
@@ -242,12 +236,12 @@ function validateTshirtForm() {
         clearError('quantity');
     }
 
-    const logo = document.querySelector('input[name="logo"]:checked');
-    if (!logo) {
-        showError('logo', 'Please select a logo option');
+    const image = document.querySelector('input[name="image"]:checked');
+    if (!image) {
+        showError('image', 'Please select an image option');
         isValid = false;
     } else {
-        clearError('logo');
+        clearError('image');
     }
 
 
