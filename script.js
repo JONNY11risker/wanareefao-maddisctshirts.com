@@ -147,8 +147,8 @@ document.getElementById('confirmPayment').addEventListener('click', function() {
         alert('Please enter the phone number you want to pay from.');
         paymentPhoneInput.focus();
         return;
-}
-    
+    }
+});    
     const phoneRegex = /^(\+254|0)[1-9][0-9]{8}$/;
     if (!phoneRegex.test(phoneNumber)) {
         alert('Please enter a valid phone number like 0725820929 or +254725820929.');
