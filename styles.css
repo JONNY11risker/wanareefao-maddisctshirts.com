@@ -733,7 +733,49 @@ input[type="file"]:focus {
         flex-direction: column;
         gap: 1rem;
     }
+.whatsapp-button {
+    display: inline-block;
+    background: #25D366;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 12px;
+    transition: 0.3s ease;
+    text-align: center;
+}
 
+.whatsapp-button:hover {
+    background: #1ebe5d;
+    transform: translateY(-2px);
+}
+
+/* Improve payment section layout */
+.payment-method {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+/* Better image selection hover */
+.image-label {
+    transition: 0.3s ease;
+}
+
+.image-label:hover {
+    transform: scale(1.03);
+}
+
+/* Button enhancement */
+.btn-primary {
+    transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
     .logo {
         font-size: 1.3rem;
     }
