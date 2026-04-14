@@ -3,286 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAD DISCIPLES - T-Shirt Store & Community</title>
+    <title>MAD DISCIPLES - T-Shirt Store</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">MAD DISCIPLES</div>
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#shop" class="nav-link">Shop</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>MAD DISCIPLES</h1>
-            <p>Express Your Style. Join the Movement.</p>
-        </div>
-    </section>
+<!-- NAV -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">MAD DISCIPLES</div>
+        <ul class="nav-links">
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
 
-    <!-- T-Shirt Ordering Section -->
-    <section id="shop" class="shop-section">
-        <div class="container">
-            <h2>Order Your T-Shirt</h2>
-            <p class="section-subtitle">Choose your style and place your order below</p>
-            
-            <form id="tshirtForm" action="https://formspree.io/f/mlgaedvz" method="POST" class="form-container">
-                <div class="form-section">
-                    <h3 class="form-section-title">Personal Information</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName">First Name *</label>
-                            <input type="text" id="firstName" name="firstName" required>
-                            <span class="error-message" id="firstNameError"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name *</label>
-                            <input type="text" id="lastName" name="lastName" required>
-                            <span class="error-message" id="lastNameError"></span>
-                        </div>
-                    </div>
+<!-- HERO -->
+<section class="hero">
+    <h1>MAD DISCIPLES</h1>
+    <p>Express Your Style</p>
+</section>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" required>
-                            <span class="error-message" id="emailError"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" required>
-                            <span class="error-message" id="phoneError"></span>
-                        </div>
-                    </div>
-                </div>
+<!-- SHOP -->
+<section id="shop" class="shop-section">
 
-                <div class="form-section">
-                    <h3 class="form-section-title">T-Shirt Selection</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="size">Size *</label>
-                            <select id="size" name="size" required>
-                                <option value="">Select Size</option>
-                                <option value="XS">Extra Small (XS)</option>
-                                <option value="S">Small (S)</option>
-                                <option value="M">Medium (M)</option>
-                                <option value="L">Large (L)</option>
-                                <option value="XL">Extra Large (XL)</option>
-                                <option value="XXL">2XL</option>
-                            </select>
-                            <span class="error-message" id="sizeError"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="quantity">Quantity *</label>
-                            <input type="number" id="quantity" name="quantity" min="1" max="100" value="1" required>
-                            <span class="error-message" id="quantityError"></span>
-                        </div>
-                    </div>
+<div class="container">
 
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label>Color *</label>
-                            <div class="color-options">
-                                <label class="color-label">
-                                    <input type="radio" name="color" value="Black" required>
-                                    <span class="color-swatch black"></span>
-                                    Black
-                                </label>
-                                <label class="color-label">
-                                    <input type="radio" name="color" value="White" required>
-                                    <span class="color-swatch white"></span>
-                                    White
-                                </label>
-                                <label class="color-label">
-                                    <input type="radio" name="color" value="Red" required>
-                                    <span class="color-swatch red"></span>
-                                    Red
-                                </label>
-                                <label class="color-label">
-                                    <input type="radio" name="color" value="Blue" required>
-                                    <span class="color-swatch blue"></span>
-                                    Blue
-                                </label>
-                                <label class="color-label">
-                                    <input type="radio" name="color" value="Gray" required>
-                                    <span class="color-swatch gray"></span>
-                                    Gray
-                                </label>
-                            </div>
-                            <span class="error-message" id="colorError"></span>
-                        </div>
-                    </div>
+<h2>Order Your T-Shirt</h2>
 
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label>image Choice</label>
-                            <div class="image-options">
-    <label class="image-label">
-        <input type="radio" name="image" value="none" checked>
-        <div class="image-preview no-image">No Image</div>
-    </label>
+<form id="tshirtForm" class="form-container">
 
-    <label class="image-label">
-        <input type="radio" name="image" value="maddisc">
-        <img src="images/maddisc.jpg" class="image-preview" alt="Design 1">
-    </label>
+<!-- PERSONAL -->
+<div class="form-section">
+<h3>Personal Info</h3>
 
-    <label class="image-label">
-        <input type="radio" name="image" value="mnaree">
-        <img src="images/mnareejm.jpg" class="image-preview" alt="Design 2">
+<div class="form-row">
+<input type="text" id="firstName" placeholder="First Name">
+<input type="text" id="lastName" placeholder="Last Name">
 </div>
-                            <span class="error-message" id="imageError"></span>
 
-                        </div>
+<div class="form-row">
+<input type="email" id="email" placeholder="Email">
+<input type="tel" id="phone" placeholder="Phone">
+</div>
+</div>
 
-                    </div>
-                    
-                </div>
+<!-- ORDER -->
+<div class="form-section">
+<h3>Order Details</h3>
 
-                <img src="https://via.placeholder.com/150">
-                
-                <div class="form-group full-width">
-                    <label for="specialRequest">Special Requests / Notes</label>
-                    <textarea id="specialRequest" name="specialRequest" rows="4" placeholder="Any custom text or special requests..."></textarea>
-                </div>
+<div class="form-row">
+<select id="size">
+<option value="">Select Size</option>
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
+</select>
 
-                <button type="submit" class="btn btn-primary">Place Order</button>
-                <span class="form-message" id="tshirtMessage"></span>
+<input type="number" id="quantity" value="1" min="1">
+</div>
 
-            </form>
+<!-- COLOR -->
+<div class="form-row">
+<label><input type="radio" name="color" value="Black"> Black</label>
+<label><input type="radio" name="color" value="White"> White</label>
+<label><input type="radio" name="color" value="Red"> Red</label>
+</div>
 
-            <!-- Payment Section -->
-            <div class="payment-section">
-                <h3 class="payment-title">Complete Your Payment</h3>
-                <div class="payment-details">
-                    <div class="payment-amount">
-                        <span class="amount-label">Amount:</span>
-                        <span class="amount-value">KSH 500-KSH 650</span>
-                    </div>
-                    <div class="payment-method">
-                        <span class="method-label">Pay through:</span>
-                        <span class="method-value">M-Pesa: 0703760756</span>
-                       <a href="#" class="whatsapp-button" id="orderWhatsAppBtn">
-   Order on WhatsApp 📲
+<textarea id="specialRequest" placeholder="Special Requests"></textarea>
+
+</div>
+
+<button type="submit" class="btn">Place Order</button>
+
+<p id="tshirtMessage"></p>
+
+</form>
+
+<!-- WHATSAPP BUTTON -->
+<a href="#" id="orderWhatsAppBtn" class="whatsapp-button">
+Order on WhatsApp 📲
 </a>
-                    </div>
-                </div>
-            </div>
-            </section>
 
-    <!-- Contact Admin Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h2>Contact Admin</h2>
-            <p class="section-subtitle">Have questions? Get in touch with our administration team</p>
-            <script src="script.js"></script>
-            <script>
-function generateOrderID() {
-    return "MD-" + Math.floor(Math.random() * 1000000);
-}
+</div>
+</section>
 
-document.getElementById("tshirtForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
 
-    const form = e.target;
-    const orderID = generateOrderID();
+<div class="container">
 
-    // Get values from YOUR CURRENT HTML
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const size = document.getElementById("size").value;
-    const quantity = document.getElementById("quantity").value;
-    const specialRequest = document.getElementById("specialRequest").value;
+<h2>Contact Admin</h2>
 
-    const color = document.querySelector('input[name="color"]:checked')?.value || "Not selected";
-    const image = document.querySelector('input[name="image"]:checked')?.value || "None";
+<form id="contactForm">
 
-    // Add order ID to form (sends to Formspree)
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "order_id";
-    input.value = orderID;
-    form.appendChild(input);
+<input type="text" id="contactName" placeholder="Name">
+<input type="email" id="contactEmail" placeholder="Email">
+<input type="text" id="subject" placeholder="Subject">
+<textarea id="message" placeholder="Message"></textarea>
 
-    const data = new FormData(form);
+<button type="submit" class="btn">Send Message</button>
 
-    const response = await fetch(form.action, {
-        method: "POST",
-        body: data,
-        headers: { "Accept": "application/json" }
-    });
+</form>
 
-    if (response.ok) {
-
-        // WhatsApp message
-        const message =
-`Hello MAD DISCIPLES 👕
-New Order Received:
-
-Order ID: ${orderID}
-
-Name: ${firstName} ${lastName}
-Email: ${email}
-Phone: ${phone}
-
-Size: ${size}
-Quantity: ${quantity}
-Color: ${color}
-Design: ${image}
-
-Special Request: ${specialRequest || "None"}`;
-
-        const whatsappURL = "https://wa.me/254725820929?text=" + encodeURIComponent(message);
-
-        alert("🎉 Order placed successfully!\nYour Order ID: " + orderID);
-
-        window.open(whatsappURL, "_blank");
-
-        form.reset();
-
-    } else {
-        alert("❌ Failed to send order. Please try again.");
-    }
-});
-</script>
-
-            <div class="form-row">
+<!-- MOBILE NUMBERS -->
+<div class="form-row">
     <div class="form-group">
-        <label>Primary Mobile</label>
-        <div class="mobile-link-display">
-            <a href="tel:0725820929" class="mobile-link">📞 0725820929</a>
-        </div>
+        <label>Primary</label>
+        <a href="tel:0725820929" class="mobile-link">📞 0725820929</a>
     </div>
 
     <div class="form-group">
-        <label>Secondary Mobile</label>
-        <div class="mobile-link-display">
-            <a href="tel:0711729501" class="mobile-link">📞 0711729501</a>
-        </div>
+        <label>Secondary</label>
+        <a href="tel:0711729501" class="mobile-link">📞 0711729501</a>
     </div>
 </div>
 
-<div class="order-info">
-    <p>Orders are handled by 2 admins:</p>
+<p class="admin-note">
+Orders handled by 2 admins: 0725820929 / 0711729501
+</p>
 
-    <div class="admin-links">
-        <a href="https://wa.me/254725820929" target="_blank">📱 Admin 1: 0725820929</a>
-        <a href="https://wa.me/254711729501" target="_blank">📱 Admin 2: 0711729501</a>
-    </div>
 </div>
-            
+</section>
+
+<!-- FOOTER -->
 <footer class="site-footer">
     <p>© 2026 Mad Disciples Ent. All Rights Reserved.</p>
 </footer>
-            
+
+<script src="script.js"></script>
 </body>
 </html>
