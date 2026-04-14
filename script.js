@@ -35,10 +35,16 @@ Special Request: ${specialRequest}
 Please confirm my order.`;
 
     const admin1 = "254725820929";
-    const admin2 = "254711729501";
+const admin2 = "254711729501";
 
-window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
-window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
+document.getElementById("orderWhatsAppBtn").addEventListener("click", function(e) {
+    e.preventDefault();
+
+    const message = "Hello MAD DISCIPLES, I want to order...";
+
+    window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
+    window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
+});
     
     const msg = document.getElementById('tshirtMessage');
     if (msg) {
