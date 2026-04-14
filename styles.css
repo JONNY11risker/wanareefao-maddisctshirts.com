@@ -48,7 +48,7 @@ body {
     align-items: center;
 }
 
-.logo {
+.image {
     font-size: 1.8rem;
     font-weight: bold;
     color: var(--secondary-color);
@@ -341,7 +341,7 @@ input[type="file"]:focus {
     margin-top: 0.5rem;
 }
 
-.logo-label {
+.image-label {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -356,18 +356,18 @@ input[type="file"]:focus {
     background-color: #fafafa;
 }
 
-.logo-label:hover {
+.image-label:hover {
     border-color: var(--secondary-color);
     background-color: rgba(255, 0, 0, 0.05);
 }
 
-.logo-label input[type="radio"] {
+.image-label input[type="radio"] {
     cursor: pointer;
     width: 18px;
     height: 18px;
 }
 
-.logo-preview {
+.image-preview {
     width: 90px;
     max-height: 90px;
     object-fit: contain;
@@ -377,7 +377,7 @@ input[type="file"]:focus {
     border: 1px solid #ddd;
 }
 
-.logo-preview.no-logo {
+.image-preview.no-omage {
     display: flex;
     align-items: center;
     justify-content: center;
