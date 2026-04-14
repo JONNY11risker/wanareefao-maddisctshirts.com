@@ -368,13 +368,15 @@ input[type="file"]:focus {
 }
 
 .image-preview {
-    width: 200px;        /* bigger image */
-    max-height: 200px;
-    object-fit: contain;
-    border-radius: 12px;
+    width: 150px;        
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 14px;
     background-color: #fff;
-    padding: 0.35rem;
-    border: 1px solid #ddd;
+    padding: 0.4rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .image-preview.no-image {
