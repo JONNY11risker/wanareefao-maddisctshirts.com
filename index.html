@@ -91,7 +91,7 @@
                             <label>Color *</label>
                             <div class="color-options">
                                 <label class="color-label">
-                                    <input type="radio" name="color" value="Black" checked required>
+                                    <input type="radio" name="color" value="Black" required>
                                     <span class="color-swatch black"></span>
                                     Black
                                 </label>
@@ -131,12 +131,12 @@
                                 </label>
                                 <label class="logo-label">
                                     <input type="radio" name="logo" value="Logo 1">
-                                    <img src="c:\Users\MBURU MWANGI\Pictures\mdisc log 1.jfif" alt="Logo 1" class="logo-preview">
+                                    <img src="mnaree jm.jpg" alt="Logo 1" class="logo-preview">
                                     Logo 1
                                 </label>
                                 <label class="logo-label">
                                     <input type="radio" name="logo" value="Logo 2">
-                                    <img src="c:\Users\MBURU MWANGI\Pictures\mdisc log 2.jfif" alt="Logo 2" class="logo-preview">
+                                    <img src="maddisc.jpg" alt="Logo 2" class="logo-preview">
                                     Logo 2
                                 </label>
                             </div>
@@ -171,6 +171,23 @@
                         <span class="method-label">Pay through:</span>
                         <span class="method-value">M-Pesa: +254 703760756</span>
                     </div>
+                    <div id="mpesaModal" class="modal">
+                         <div class="modal-content">
+                              <div class="modal-header">
+                                   <h3 class="modal-title">M-Pesa Payment</h3>
+                              </div>
+
+                             <div class="modal-body">
+                               <label class="pin-label">Enter your phone number</label>
+            <input type="tel" id="paymentPhone" class="payment-phone-input" placeholder="07XXXXXXXX">
+        </div>
+
+        <div class="modal-footer">
+            <button id="confirmPayment" class="btn-confirm">Confirm</button>
+            <button id="cancelPayment" class="btn-cancel">Cancel</button>
+        </div>
+    </div>
+          </div>
                 </div>
             </div>
         </div>
