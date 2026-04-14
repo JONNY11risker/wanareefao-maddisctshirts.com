@@ -34,7 +34,7 @@ Special Request: ${specialRequest}
 
 Please confirm my order.`;
 
-    const whatsappURL = `https://wa.me/254703760756?text=${encodeURIComponent(message)}`;
+    const whatsappURL = `https://wa.me/254725820929?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL, "_blank");
 
     const msg = document.getElementById('tshirtMessage');
