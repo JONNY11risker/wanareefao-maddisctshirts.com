@@ -147,8 +147,6 @@ document.getElementById('confirmPayment').addEventListener('click', function() {
         alert('Please enter the phone number you want to pay from.');
         paymentPhoneInput.focus();
         return;
-    }
-   
     const payBtn = document.getElementById('payButton');
     if (payBtn) {
         payBtn.addEventListener('click', function() {
