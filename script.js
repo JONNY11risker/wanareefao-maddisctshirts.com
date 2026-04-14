@@ -148,6 +148,7 @@ document.getElementById('confirmPayment').addEventListener('click', function() {
         paymentPhoneInput.focus();
         return;
     }
+   
     const payBtn = document.getElementById('payButton');
     if (payBtn) {
         payBtn.addEventListener('click', function() {
