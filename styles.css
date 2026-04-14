@@ -277,7 +277,25 @@ input[type="file"]:focus {
     color: #666;
 }
 
+.mobile-link-display {
+    margin-top: 5px;
+}
 
+.mobile-link {
+    display: inline-block;
+    padding: 10px 14px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #222;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.mobile-link:hover {
+    background: #ddd;
+    transform: translateY(-2px);
+}
 /* ==================== Color Swatches ==================== */
 .color-options {
     display: flex;
@@ -688,6 +706,15 @@ input[type="file"]:focus {
 
 .footer p {
     margin: 0.5rem 0;
+}
+
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #777;
+    border-top: 1px solid #eee;
 }
 
 /* ==================== Responsive Design ==================== */
