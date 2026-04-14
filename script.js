@@ -236,13 +236,12 @@ function validateTshirtForm() {
         clearError('quantity');
     }
 
-    const image = document.querySelector('input[name="image"]:checked');
-    if (!image) {
-        showError('image', 'Please select an image option');
-        isValid = false;
-    } else {
-        clearError('image');
-    }
+    const image = document.getElementById("upload").addEventListener("change", function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    document.getElementById("preview").src = URL.maddisc.jpg,mnaree.jpg(file);
+  }
+});
 
 
 
