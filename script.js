@@ -34,9 +34,12 @@ Special Request: ${specialRequest}
 
 Please confirm my order.`;
 
-    const whatsappURL = `https://wa.me/254725820929?text=${encodeURIComponent(message)}`;
-    window.open(whatsappURL, "_blank");
+    const admin1 = "254725820929";
+    const admin2 = "254711729501";
 
+window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
+window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
+    
     const msg = document.getElementById('tshirtMessage');
     if (msg) {
         msg.textContent = "Opening WhatsApp to complete your order...";
@@ -69,8 +72,11 @@ Subject: ${subject}
 Message:
 ${message}`;
 
-    const url = `https://wa.me/254725820929?text=${encodeURIComponent(whatsappText)}`;
-    window.open(url, "_blank");
+    const admin1 = "254725820929";
+    const admin2 = "254711729501";
+
+window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(whatsappText)}`, "_blank");
+window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(whatsappText)}`, "_blank");
 });
 
 
