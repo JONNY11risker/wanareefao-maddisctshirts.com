@@ -236,12 +236,20 @@ function validateTshirtForm() {
         clearError('quantity');
     }
 
-    const image = document.getElementById("upload").addEventListener("change", function(e) {
-  const file = e.target.files[0];
-  if (file) {
-    document.getElementById("preview").src = URL.maddisc.jpg,mnaree.jpg(file);
-  }
-});
+    function setupPreview(inputId, previewId) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+
+    input.addEventListener("change", function () {
+        const file = input.files[0];
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+        }
+    });
+}
+
+setupPreview("upload1", "preview1");
+setupPreview("upload2", "preview2");
 
 
 
