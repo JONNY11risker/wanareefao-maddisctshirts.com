@@ -1,88 +1,185 @@
+/* ================= GLOBAL ================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial;
+:root {
+    --primary: #111;
+    --accent: #ff0000;
+    --bg: #f5f5f5;
+    --card: #ffffff;
+    --text: #222;
 }
 
-/* NAV */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f5f5, #e9e9e9);
+    color: var(--text);
+}
+
+/* ================= NAV ================= */
 .navbar {
-    background: black;
+    background: var(--primary);
     color: white;
     padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .nav-links {
     display: flex;
     gap: 15px;
+    list-style: none;
 }
 
-/* HERO */
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+/* ================= HERO ================= */
 .hero {
     text-align: center;
-    padding: 50px;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #111, #333);
+    color: white;
 }
 
-/* SECTIONS */
-.shop-section, .contact-section {
-    padding: 40px;
+.hero h1 {
+    font-size: 3rem;
+    color: var(--accent);
+    animation: fadeDown 1s ease;
 }
 
-/* FORM */
+.hero p {
+    animation: fadeUp 1s ease;
+}
+
+/* ================= SECTIONS ================= */
+.shop-section,
+.contact-section {
+    padding: 50px 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* ================= FORM CARD ================= */
 .form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    background: var(--card);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: 0.3s;
 }
 
-.form-row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+.form-container:hover {
+    transform: translateY(-3px);
 }
 
+/* ================= INPUTS ================= */
 input, select, textarea {
-    padding: 10px;
     width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: 0.3s;
 }
 
-/* BUTTON */
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 10px rgba(255,0,0,0.2);
+}
+
+/* ================= BUTTON ================= */
 .btn {
-    padding: 10px;
-    background: red;
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
     color: white;
     border: none;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
-/* WHATSAPP */
+.btn:hover {
+    background: #cc0000;
+    transform: translateY(-2px);
+}
+
+/* ================= WHATSAPP BUTTON ================= */
 .whatsapp-button {
     display: inline-block;
     margin-top: 15px;
     background: #25D366;
     color: white;
-    padding: 10px;
+    padding: 12px 18px;
+    border-radius: 8px;
     text-decoration: none;
-    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
-/* MOBILE LINKS */
+.whatsapp-button:hover {
+    background: #1ebe5d;
+    transform: scale(1.05);
+}
+
+/* ================= MOBILE LINKS ================= */
 .mobile-link {
     display: inline-block;
-    padding: 8px;
-    background: #f2f2f2;
-    border-radius: 5px;
+    padding: 10px;
+    background: #eee;
+    border-radius: 6px;
     text-decoration: none;
     color: black;
+    transition: 0.3s;
 }
 
-/* FOOTER */
+.mobile-link:hover {
+    background: #ddd;
+    transform: translateY(-2px);
+}
+
+/* ================= FOOTER ================= */
 .site-footer {
     text-align: center;
     padding: 20px;
-    margin-top: 30px;
-    border-top: 1px solid #ddd;
+    margin-top: 40px;
+    background: #111;
+    color: white;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeDown {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes fadeUp {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
 }
