@@ -35,10 +35,14 @@ Quantity: ${quantity}
 Color: ${color || "Not selected"}
 Request: ${request || "None"}`;
 
-    // ✅ WhatsApp
-    window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
-    window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
+    // ✅ WhatsApp (Admin 1)
+window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
 
+// ✅ WhatsApp (Admin 2 with delay to prevent popup blocking)
+setTimeout(() => {
+    window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
+}, 800);
+    
     // ✅ EmailJS
     emailjs.send("service_clhjwwf", "template_jtxcpm3", {
         order_id: orderId,
