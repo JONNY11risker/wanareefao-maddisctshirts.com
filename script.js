@@ -1,6 +1,6 @@
 const admin1 = "254725820929";
 const admin2 = "254711729501";
-const adminEmail1 = "jontychampee11@gmail.com";
+const adminEmail = "jontychampee11@gmail.com";
 
 /* ================= ORDER ================= */
 document.getElementById("tshirtForm")?.addEventListener("submit", function(e) {
@@ -39,16 +39,29 @@ Request: ${request || "None"}`;
     window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
     window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
 
-    const subject = `New Order - ${orderId}`;
-const mailBody = encodeURIComponent(message);
-
-const mailtoLink = `mailto:${adminEmail1}?subject=${subject}&body=${mailBody}`;
-
+   emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+    order_id: orderId,
+    first_name: firstName,
+    last_name: lastName,
+    email: email,
+    phone: phone,
+    size: size,
+    quantity: quantity,
+    color: color || "Not selected",
+    request: request || "None",
+    full_message: message
+})
+.then(function(response) {
+    console.log("SUCCESS!", response.status, response.text);
+})
+.catch(function(error) {
+    console.log("FAILED...", error);
+});
 downloadReceipt(orderId, message);
     
 window.open(mailtoLink, "_blank");
-    document.getElementById("tshirtMessage").innerText = "Order sent successfully!";
-});
+    document.getElementById("tshirtMessage").innerText =
+`Order sent! Your Order ID is ${orderId}`;
 
 function downloadReceipt(orderId, message) {
     const blob = new Blob([message], { type: "text/plain" });
