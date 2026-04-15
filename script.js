@@ -1,6 +1,5 @@
 const admin1 = "254725820929";
 const admin2 = "254711729501";
-const adminEmail = "jontychampee11@gmail.com";
 
 /* ================= ORDER ================= */
 document.getElementById("tshirtForm")?.addEventListener("submit", function(e) {
@@ -22,7 +21,7 @@ document.getElementById("tshirtForm")?.addEventListener("submit", function(e) {
 
     const orderId = "MD-" + Date.now();
 
-const message =
+    const message =
 `🔥 MAD DISCIPLES ORDER
 
 Order ID: ${orderId}
@@ -36,36 +35,41 @@ Quantity: ${quantity}
 Color: ${color || "Not selected"}
 Request: ${request || "None"}`;
 
-    // WhatsApp
-window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
-window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
+    // ✅ WhatsApp
+    window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
+    window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
 
-// EmailJS
-emailjs.send("service_clhjwwf", "template_jtxcpm3", {
-    order_id: orderId,
-    first_name: firstName,
-    last_name: lastName,
-    email: email,
-    phone: phone,
-    size: size,
-    quantity: quantity,
-    color: color || "Not selected",
-    request: request || "None",
-    full_message: message
-})
-.then(function(response) {
-    console.log("SUCCESS!", response.status, response.text);
-})
-.catch(function(error) {
-    console.log("FAILED...", error);
+    // ✅ EmailJS
+    emailjs.send("service_clhjwwf", "template_jtxcpm3", {
+        order_id: orderId,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone: phone,
+        size: size,
+        quantity: quantity,
+        color: color || "Not selected",
+        request: request || "None",
+        full_message: message
+    })
+    .then(function(response) {
+        console.log("SUCCESS!", response.status, response.text);
+    })
+    .catch(function(error) {
+        console.log("FAILED...", error);
+        alert("Email failed. Check console.");
+    });
+
+    // ✅ Download receipt
+    downloadReceipt(orderId, message);
+
+    // ✅ Show success
+    document.getElementById("tshirtMessage").innerText =
+    `Order sent! Your Order ID is ${orderId}`;
 });
 
-// Download
-downloadReceipt(orderId, message);
 
-// Show message
-document.getElementById("tshirtMessage").innerText =
-`Order sent! Your Order ID is ${orderId}`;
+/* ✅ OUTSIDE FUNCTION (IMPORTANT) */
 function downloadReceipt(orderId, message) {
     const blob = new Blob([message], { type: "text/plain" });
     const link = document.createElement("a");
@@ -77,7 +81,8 @@ function downloadReceipt(orderId, message) {
     link.click();
     document.body.removeChild(link);
 }
-    
+
+
 /* ================= CONTACT ================= */
 document.getElementById("contactForm")?.addEventListener("submit", function(e) {
     e.preventDefault();
