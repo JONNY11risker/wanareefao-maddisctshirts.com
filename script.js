@@ -36,10 +36,12 @@ Quantity: ${quantity}
 Color: ${color || "Not selected"}
 Request: ${request || "None"}`;
 
-    window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
-    window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
+    // WhatsApp
+window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
+window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
 
-   emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+// EmailJS
+emailjs.send("service_clhjwwf", "template_jtxcpm3", {
     order_id: orderId,
     first_name: firstName,
     last_name: lastName,
@@ -57,12 +59,13 @@ Request: ${request || "None"}`;
 .catch(function(error) {
     console.log("FAILED...", error);
 });
-downloadReceipt(orderId, message);
-    
-window.open(mailtoLink, "_blank");
-    document.getElementById("tshirtMessage").innerText =
-`Order sent! Your Order ID is ${orderId}`;
 
+// Download
+downloadReceipt(orderId, message);
+
+// Show message
+document.getElementById("tshirtMessage").innerText =
+`Order sent! Your Order ID is ${orderId}`;
 function downloadReceipt(orderId, message) {
     const blob = new Blob([message], { type: "text/plain" });
     const link = document.createElement("a");
@@ -74,7 +77,7 @@ function downloadReceipt(orderId, message) {
     link.click();
     document.body.removeChild(link);
 }
-
+    
 /* ================= CONTACT ================= */
 document.getElementById("contactForm")?.addEventListener("submit", function(e) {
     e.preventDefault();
