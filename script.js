@@ -109,7 +109,7 @@ Message: ${message}`;
 document.getElementById("orderWhatsAppBtn")?.addEventListener("click", function(e) {
     e.preventDefault();
 
-    const msg = "Hello MAD DISCIPLES 👕 I want to place an order.";
+    const msg = "Hello MAD DISCIPLES 👕 I want to place an order for a t-shirt can you send me the logo template so i can choose one, i'll contact you with name details on response.";
 
     window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(msg)}`, "_blank");
     window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(msg)}`, "_blank");
