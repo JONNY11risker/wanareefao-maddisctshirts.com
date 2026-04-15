@@ -1,5 +1,6 @@
 const admin1 = "254725820929";
 const admin2 = "254711729501";
+const adminEmail1 = "jontychampee11@gmail.com";
 
 /* ================= ORDER ================= */
 document.getElementById("tshirtForm")?.addEventListener("submit", function(e) {
@@ -19,8 +20,12 @@ document.getElementById("tshirtForm")?.addEventListener("submit", function(e) {
         return;
     }
 
-    const message =
+    const orderId = "MD-" + Date.now();
+
+const message =
 `🔥 MAD DISCIPLES ORDER
+
+Order ID: ${orderId}
 
 Name: ${firstName} ${lastName}
 Email: ${email}
@@ -34,9 +39,28 @@ Request: ${request || "None"}`;
     window.open(`https://wa.me/${admin1}?text=${encodeURIComponent(message)}`, "_blank");
     window.open(`https://wa.me/${admin2}?text=${encodeURIComponent(message)}`, "_blank");
 
+    const subject = `New Order - ${orderId}`;
+const mailBody = encodeURIComponent(message);
+
+const mailtoLink = `mailto:${adminEmail1}?subject=${subject}&body=${mailBody}`;
+
+downloadReceipt(orderId, message);
+    
+window.open(mailtoLink, "_blank");
     document.getElementById("tshirtMessage").innerText = "Order sent successfully!";
 });
 
+function downloadReceipt(orderId, message) {
+    const blob = new Blob([message], { type: "text/plain" });
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+    link.download = `${orderId}.txt`;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
 /* ================= CONTACT ================= */
 document.getElementById("contactForm")?.addEventListener("submit", function(e) {
